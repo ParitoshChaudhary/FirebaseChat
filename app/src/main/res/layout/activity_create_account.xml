@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CreateAccountActivity"
+    android:background="@drawable/bg">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="300dp"
+        android:id="@+id/cv"
+        android:background="@color/colorAccent"
+        android:layout_centerInParent="true"
+        app:cardCornerRadius="13dp"
+        app:cardElevation="4dp"
+        app:cardUseCompatPadding="true"
+        android:layout_height="400dp">
+
+        <LinearLayout
+            android:background="@color/colorAccent"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/chat_icon"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="@dimen/dimen_30dp"/>
+
+            <TextView
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="10dp"
+                android:textColor="#fff"
+                android:text="@string/create_act"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_marginTop="10dp"
+                android:paddingStart="50dp"
+                android:paddingEnd="30dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="50dp"
+                android:paddingRight="30dp">
+
+                <EditText
+                    android:id="@+id/ed_display_name"
+                    android:background="@drawable/selector_bg_edit_2"
+                    android:inputType="textPersonName"
+                    android:hint="Display Name"
+                    android:paddingBottom="10dp"
+                    android:textColor="#f0f7f4"
+                    android:textSize="14sp"
+                    android:textCursorDrawable="@drawable/bg_input_cursor_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_10dp"/>
+
+                <EditText
+                    android:id="@+id/ed_email"
+                    android:background="@drawable/selector_bg_edit_2"
+                    android:inputType="textEmailAddress"
+                    android:hint="Enter Email"
+                    android:paddingBottom="10dp"
+                    android:textColor="#f0f7f4"
+                    android:textSize="14sp"
+                    android:textCursorDrawable="@drawable/bg_input_cursor_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_15dp"/>
+
+                <EditText
+                    android:id="@+id/ed_password"
+                    android:background="@drawable/selector_bg_edit_2"
+                    android:inputType="textPassword"
+                    android:hint="Password"
+                    android:paddingBottom="10dp"
+                    android:textColor="#f0f7f4"
+                    android:textSize="14sp"
+                    android:textCursorDrawable="@drawable/bg_input_cursor_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_15dp"/>
+
+                <RelativeLayout
+                    android:layout_marginTop="@dimen/dimen_36dp"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp">
+
+                    <Button
+                        android:id="@+id/btn_create"
+                        android:background="@drawable/bt_shape"
+                        android:stateListAnimator="@drawable/state_list_animator_z"
+                        android:layout_width="150dp"
+                        android:textColor="#d3d3d3"
+                        android:text="@string/create_act"
+                        android:layout_height="50dp" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

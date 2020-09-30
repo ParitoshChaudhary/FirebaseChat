@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "377609875916",
+    "firebase_url": "https://kotlin-dd4ef.firebaseio.com",
+    "project_id": "kotlin-dd4ef",
+    "storage_bucket": "kotlin-dd4ef.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:377609875916:android:6051bfa5b4ddd2115a6d69",
+        "android_client_info": {
+          "package_name": "com.example.firebasechat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "377609875916-ieo7doof9q4h1q8ce9l3hoii649ljcvi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.firebasechat",
+            "certificate_hash": "56189a56a7cffacd318fe9e5a5b4e2c940ee8bb5"
+          }
+        },
+        {
+          "client_id": "377609875916-40kv2cus2djma15iqjved36ri81ipjsq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBN3gw4f5MqWJqGmoFMnNs4BTQI7KU6YoM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "377609875916-40kv2cus2djma15iqjved36ri81ipjsq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

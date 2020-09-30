@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">FirebaseChat</string>
+    <string name="text_email">Email</string>
+    <string name="text_password">Password</string>
+    <string name="text_create">Create An Account</string>
+    <string name="welcome_text">Welcome to Chat App</string>
+    <string name="text_loginBtn">Login to Account</string>
+    <string name="create_act">Create New Account</string>
+</resources>
