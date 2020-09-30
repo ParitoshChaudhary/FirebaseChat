@@ -45,7 +45,7 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/ed_email"
+                    android:id="@+id/ed_email_login"
                     android:background="@drawable/selector_bg_edit_2"
                     android:hint="Enter Email"
                     android:textSize="14sp"
@@ -58,7 +58,7 @@
                     android:layout_height="wrap_content" />
 
                 <EditText
-                    android:id="@+id/ed_password"
+                    android:id="@+id/ed_password_login"
                     android:layout_marginTop="15dp"
                     android:background="@drawable/selector_bg_edit_2"
                     android:hint="Enter Password"

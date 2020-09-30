@@ -25,8 +25,8 @@ class CreateAccountActivity : AppCompatActivity() {
         mAuth = FirebaseAuth.getInstance()
 
         btn_create.setOnClickListener{
-            val email = ed_email.text.toString().trim()
-            val password = ed_password.text.toString().trim()
+            val email = ed_email_login.text.toString().trim()
+            val password = ed_password_login.text.toString().trim()
             val name = ed_display_name.text.toString().trim()
 
             if(!TextUtils.isEmpty(email) || !TextUtils.isEmpty(password) || !TextUtils.isEmpty(name)){

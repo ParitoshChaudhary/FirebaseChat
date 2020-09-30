@@ -64,7 +64,7 @@
                     android:layout_marginTop="@dimen/dimen_10dp"/>
 
                 <EditText
-                    android:id="@+id/ed_email"
+                    android:id="@+id/ed_email_login"
                     android:background="@drawable/selector_bg_edit_2"
                     android:inputType="textEmailAddress"
                     android:hint="Enter Email"
@@ -77,7 +77,7 @@
                     android:layout_marginTop="@dimen/dimen_15dp"/>
 
                 <EditText
-                    android:id="@+id/ed_password"
+                    android:id="@+id/ed_password_login"
                     android:background="@drawable/selector_bg_edit_2"
                     android:inputType="textPassword"
                     android:hint="Password"
