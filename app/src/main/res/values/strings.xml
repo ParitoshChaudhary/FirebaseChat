@@ -6,4 +6,10 @@
     <string name="welcome_text">Welcome to Chat App</string>
     <string name="text_loginBtn">Login to Account</string>
     <string name="create_act">Create New Account</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="txt_logout">Logout</string>
+    <string name="txt_settings">Settings</string>
+    <string name="txt_name">Username</string>
+    <string name="status">User Status</string>
 </resources>

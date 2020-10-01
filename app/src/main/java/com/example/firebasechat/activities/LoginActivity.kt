@@ -1,8 +1,11 @@
-package com.example.firebasechat
+package com.example.firebasechat.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.TextUtils
+import android.widget.Toast
+import com.example.firebasechat.R
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
@@ -23,7 +26,14 @@ class LoginActivity : AppCompatActivity() {
         btn_login.setOnClickListener{
             val email = ed_email_login.text.toString().trim()
             val password = ed_password_login.text.toString().trim()
-            loginUser(email, password)
+
+            if(!TextUtils.isEmpty(email) || !TextUtils.isEmpty(password)){
+                loginUser(email, password)
+            }else{
+                Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT)
+                    .show()
+            }
+
         }
 
     }
