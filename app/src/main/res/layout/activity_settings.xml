@@ -10,7 +10,7 @@
         android:id="@+id/img_profile"
         android:layout_width="@dimen/dimen_140dp"
         android:layout_height="@dimen/dimen_140dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="@dimen/dimen_50dp"
         android:src="@drawable/profile_img"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,5 +40,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_name"
         android:textSize="@dimen/dimen_text_21sp"/>
+
+    <Button
+        android:id="@+id/btn_change_pic"
+        android:layout_width="@dimen/dimen_200dp"
+        android:layout_height="@dimen/dimen_50dp"
+        android:layout_marginBottom="@dimen/dimen_40dp"
+        android:text="@string/txt_change_pic"
+        app:layout_constraintBottom_toTopOf="@+id/btn_change_status"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:stateListAnimator="@drawable/state_list_animator_z"
+        android:background="@drawable/btn_shape_settings"/>
+
+    <Button
+        android:id="@+id/btn_change_status"
+        android:layout_width="@dimen/dimen_200dp"
+        android:layout_height="@dimen/dimen_50dp"
+        android:layout_marginBottom="@dimen/dimen_80dp"
+        android:text="@string/txt_change_status"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:stateListAnimator="@drawable/state_list_animator_z"
+        android:background="@drawable/btn_shape_settings"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
