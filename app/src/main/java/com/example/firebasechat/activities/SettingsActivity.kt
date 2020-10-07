@@ -3,20 +3,21 @@ package com.example.firebasechat.activities
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.lifecycle.lifecycleScope
 import com.example.firebasechat.R
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.UploadTask
 import com.theartofdev.edmodo.cropper.CropImage
-import id.zelory.compressor.Compressor
-import id.zelory.compressor.constraint.format
-import id.zelory.compressor.constraint.quality
-import id.zelory.compressor.constraint.resolution
 import kotlinx.android.synthetic.main.activity_settings.*
+import java.io.ByteArrayOutputStream
 import java.io.File
 
 class SettingsActivity : AppCompatActivity() {
@@ -78,20 +79,27 @@ class SettingsActivity : AppCompatActivity() {
                 .start(this)
         }
         if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE){
+            super.onActivityResult(requestCode, resultCode, data)
             val result = CropImage.getActivityResult(data)
             if (resultCode == Activity.RESULT_OK){
                 val resultUri = result.uri
 
                 val userId = mUser!!.uid
+                val stream = ByteArrayOutputStream()
                 val thumbnail = File(resultUri.path)
-                val thumbBitmap = Compressor.compress(this, thumbnail){
-                    quality(70)
-                    resolution(200,200)
-                    format(Bitmap.CompressFormat.JPEG)
+                val bitmap: Bitmap = BitmapFactory.decodeFile(thumbnail.toString())
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 70, stream)
+                val imageByteArray: ByteArray
+                imageByteArray = stream.toByteArray()
+                val filePath = mStorageRef!!.child("user_profile_images")
+                    .child("$userId.jpg")
+                val thumbFilePath = mStorageRef!!.child("user_profile_images")
+                    .child("thumbs")
+                    .child("$userId.jpg")
+                filePath.putFile(resultUri).addOnCanceledListener {
+                    task: Task<>
                 }
             }
         }
-
     }
-
 }
