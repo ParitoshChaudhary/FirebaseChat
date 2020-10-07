@@ -7,6 +7,8 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.example.firebasechat.R
 import com.google.android.gms.tasks.Task
@@ -46,13 +48,9 @@ class SettingsActivity : AppCompatActivity() {
 
                 txt_name.text = name.toString()
                 txt_status.text = status.toString()
-
             }
-
             override fun onCancelled(error: DatabaseError) {
-
             }
-
         })
 
         btn_change_status.setOnClickListener {
@@ -67,7 +65,6 @@ class SettingsActivity : AppCompatActivity() {
             galleryIntent.action = Intent.ACTION_GET_CONTENT
             startActivityForResult(Intent.createChooser(galleryIntent, "SELECT IMAGE"), GALLERY_ID)
         }
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -96,8 +93,40 @@ class SettingsActivity : AppCompatActivity() {
                 val thumbFilePath = mStorageRef!!.child("user_profile_images")
                     .child("thumbs")
                     .child("$userId.jpg")
-                filePath.putFile(resultUri).addOnCanceledListener {
-                    task: Task<>
+                filePath.putFile(resultUri).addOnCompleteListener {
+                        task: Task<UploadTask.TaskSnapshot> ->
+                    if (task.isSuccessful){
+                        val imageUrl = filePath.downloadUrl.toString()
+                        val uploadTask: UploadTask = thumbFilePath.putBytes(imageByteArray)
+                        uploadTask.addOnCompleteListener{
+                                task: Task<UploadTask.TaskSnapshot> ->
+                            val thumbUrl = thumbFilePath.downloadUrl.toString()
+                            if (task.isSuccessful){
+                                val userObj = HashMap<String, Any>()
+                                userObj["image"] = imageUrl
+                                userObj["thumb_image"] = thumbUrl
+                                mDatabase!!.updateChildren(userObj).addOnCompleteListener{
+                                        task: Task<Void> ->
+                                    if (task.isSuccessful){
+                                        Toast.makeText(this,
+                                            "Profile Picture updated Successfully",
+                                            Toast.LENGTH_SHORT)
+                                            .show()
+                                        Log.d("PIC UPLOAD", "PICTURE UPDATE SUCCESSFULLY")
+//                                        Outgoing transactions from this process must be FLAG_ONEWAY
+                                    }else{
+                                        Toast.makeText(this,
+                                            "Unable to update profile Picture",
+                                            Toast.LENGTH_SHORT)
+                                            .show()
+                                        Log.d("PIC UPLOAD", "PICTURE NOT UPDATE")
+                                    }
+                                }
+                            }else{
+                                Log.e("PIC UPLOAD", "UNABLE TO UPLOAD PICTURE")
+                            }
+                        }
+                    }
                 }
             }
         }
