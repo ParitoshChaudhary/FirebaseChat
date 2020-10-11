@@ -79,6 +79,9 @@ class SettingsActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        var finalProfilePic: String? = null
+        var finalThumbPic: String? = null
+
         if (requestCode == GALLERY_ID && resultCode == Activity.RESULT_OK){
             val image: Uri = data!!.data!!
             CropImage.activity(image)
@@ -105,15 +108,19 @@ class SettingsActivity : AppCompatActivity() {
                 filePath.putFile(resultUri).addOnCompleteListener {
                         task: Task<UploadTask.TaskSnapshot> ->
                     if (task.isSuccessful){
-                        val imageUrl = task.result.toString()
+                        filePath.downloadUrl.addOnSuccessListener {
+                            finalProfilePic = it.toString()
+                        }
                         val uploadTask: UploadTask = thumbFilePath.putBytes(imageByteArray)
                         uploadTask.addOnCompleteListener{
                                 task: Task<UploadTask.TaskSnapshot> ->
-                            val thumbUrl = thumbFilePath.downloadUrl.toString()
                             if (task.isSuccessful){
+                                thumbFilePath.downloadUrl.addOnSuccessListener {
+                                    finalThumbPic = it.toString()
+                                }
                                 val userObj = HashMap<String, Any>()
-                                userObj["image"] = imageUrl
-                                userObj["thumb_image"] = thumbUrl
+                                userObj["image"] = finalProfilePic.toString()
+                                userObj["thumb_image"] = finalThumbPic.toString()
                                 mDatabase!!.updateChildren(userObj).addOnCompleteListener{
                                         task: Task<Void> ->
                                     if (task.isSuccessful){
