@@ -15,8 +15,10 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
+import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
+import com.squareup.picasso.Picasso
 import com.theartofdev.edmodo.cropper.CropImage
 import kotlinx.android.synthetic.main.activity_settings.*
 import java.io.ByteArrayOutputStream
@@ -34,7 +36,8 @@ class SettingsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_settings)
 
         mUser = FirebaseAuth.getInstance().currentUser
-        var userId = mUser!!.uid
+        mStorageRef = FirebaseStorage.getInstance().reference
+        val userId = mUser!!.uid
         mDatabase = FirebaseDatabase.getInstance().reference
             .child("Users")
             .child(userId)
@@ -42,9 +45,16 @@ class SettingsActivity : AppCompatActivity() {
         mDatabase!!.addValueEventListener(object: ValueEventListener{
             override fun onDataChange(data: DataSnapshot) {
                 val name = data.child("display_name").value
-                var image = data.child("image").value
+                var image = data.child("image").value.toString()
                 val status = data.child("status").value
                 var thumbnail = data.child("thumb_image").value
+
+                if(image != "default"){
+                    Picasso.get()
+                        .load(image)
+                        .placeholder(R.drawable.profile_img)
+                        .into(img_profile)
+                }
 
                 txt_name.text = name.toString()
                 txt_status.text = status.toString()
@@ -68,15 +78,14 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-
-        if (requestCode == GALLERY_ID && requestCode == Activity.RESULT_OK){
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == GALLERY_ID && resultCode == Activity.RESULT_OK){
             val image: Uri = data!!.data!!
             CropImage.activity(image)
                 .setAspectRatio(1, 1)
                 .start(this)
         }
-        if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE){
-            super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE){
             val result = CropImage.getActivityResult(data)
             if (resultCode == Activity.RESULT_OK){
                 val resultUri = result.uri
@@ -96,7 +105,7 @@ class SettingsActivity : AppCompatActivity() {
                 filePath.putFile(resultUri).addOnCompleteListener {
                         task: Task<UploadTask.TaskSnapshot> ->
                     if (task.isSuccessful){
-                        val imageUrl = filePath.downloadUrl.toString()
+                        val imageUrl = task.result.toString()
                         val uploadTask: UploadTask = thumbFilePath.putBytes(imageByteArray)
                         uploadTask.addOnCompleteListener{
                                 task: Task<UploadTask.TaskSnapshot> ->
@@ -131,4 +140,5 @@ class SettingsActivity : AppCompatActivity() {
             }
         }
     }
+
 }
