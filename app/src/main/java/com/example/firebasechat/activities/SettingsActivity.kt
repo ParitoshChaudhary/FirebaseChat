@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import androidx.lifecycle.lifecycleScope
 import com.example.firebasechat.R
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
@@ -45,9 +44,9 @@ class SettingsActivity : AppCompatActivity() {
         mDatabase!!.addValueEventListener(object: ValueEventListener{
             override fun onDataChange(data: DataSnapshot) {
                 val name = data.child("display_name").value
-                var image = data.child("image").value.toString()
+                val image = data.child("image").value.toString()
                 val status = data.child("status").value
-                var thumbnail = data.child("thumb_image").value
+                val thumbnail = data.child("thumb_image").value.toString()
 
                 if(image != "default"){
                     Picasso.get()
@@ -129,7 +128,6 @@ class SettingsActivity : AppCompatActivity() {
                                             Toast.LENGTH_SHORT)
                                             .show()
                                         Log.d("PIC UPLOAD", "PICTURE UPDATE SUCCESSFULLY")
-//                                        Outgoing transactions from this process must be FLAG_ONEWAY
                                     }else{
                                         Toast.makeText(this,
                                             "Unable to update profile Picture",

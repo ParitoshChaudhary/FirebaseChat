@@ -17,4 +17,5 @@
     <string name="txt_enter_status">Enter your Status</string>
     <string name="txt_hint_status">Status...</string>
     <string name="txt_status_update">Update Status</string>
+    <string name="txt_user_status">User Status</string>
 </resources>
