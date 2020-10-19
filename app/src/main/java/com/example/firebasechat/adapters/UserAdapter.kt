@@ -16,7 +16,7 @@ import com.squareup.picasso.Picasso
 class UserAdapter(private val list: ArrayList<Users>, val context: Context):
     RecyclerView.Adapter<UserAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserAdapter.ViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.fragment_chats, parent, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.users_row, parent, false)
         return ViewHolder(view)
     }
 
@@ -38,9 +38,9 @@ class UserAdapter(private val list: ArrayList<Users>, val context: Context):
             username.text = users.display_name
             user_status.text = users.user_status
 
-            if (!TextUtils.isEmpty(users.thumb_img)) {
+            if (!TextUtils.isEmpty(users.profile_image)) {
                 Picasso.get()
-                    .load(users.thumb_img)
+                    .load(users.profile_image)
                     .placeholder(android.R.drawable.ic_menu_report_image)
                     .error(android.R.drawable.ic_menu_report_image)
                     .into(user_image)

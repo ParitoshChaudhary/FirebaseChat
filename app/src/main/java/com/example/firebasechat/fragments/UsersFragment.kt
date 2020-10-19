@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.firebasechat.R
 import com.example.firebasechat.adapters.UserAdapter
 import com.example.firebasechat.models.Users
@@ -17,24 +18,26 @@ class UsersFragment : Fragment() {
 
     private var mUserDatabase: DatabaseReference? = null
     private var userList: ArrayList<Users>? = null
+    private var userAdapter: UserAdapter? = null
+    private var layoutManager: RecyclerView.LayoutManager? = null
+    private var rcv_users: RecyclerView? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_users, container, false)
+        val rootView: View = inflater.inflate(R.layout.fragment_users, container, false)
+        rcv_users = rootView.findViewById(R.id.rcv_users) as RecyclerView
+        return rootView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-
         mUserDatabase = FirebaseDatabase.getInstance().reference.child("Users")
+        userList = ArrayList<Users>()
 
-        rcv_users.setHasFixedSize(true)
-        rcv_users.layoutManager = linearLayoutManager
+        rcv_users?.setHasFixedSize(true)
 
         mUserDatabase!!.addValueEventListener(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -49,13 +52,17 @@ class UsersFragment : Fragment() {
                     userList?.add(user)
                     Log.e("USER DATA", "=====${user.display_name} +  ${user.user_status} + " +
                             "${user.thumb_img} + ${user.profile_image}")
+                    userAdapter = context?.let { UserAdapter(userList!!, it) }
+                    layoutManager = LinearLayoutManager(context)
+                    rcv_users?.adapter = userAdapter
+                    rcv_users?.layoutManager = layoutManager
                 }
+                userAdapter?.notifyDataSetChanged()
             }
 
             override fun onCancelled(error: DatabaseError) {
                 Log.e("USER DATA ERROR", "========$error")
             }
-
         })
     }
 }
