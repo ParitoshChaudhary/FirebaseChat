@@ -1,5 +1,6 @@
 package com.example.firebasechat.adapters
 
+import android.app.SearchManager
 import android.content.Context
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -7,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.firebasechat.R
 import com.example.firebasechat.models.Users
@@ -47,7 +49,14 @@ class UserAdapter(private val list: ArrayList<Users>, val context: Context):
             }else {
                 Picasso.get().load(R.mipmap.ic_launcher).into(user_image)
             }
+
+            itemView.setOnClickListener {
+                val userId = users.user_id
+                Toast.makeText(context, userId, Toast.LENGTH_SHORT).show()
+            }
+
         }
+
     }
 }
 

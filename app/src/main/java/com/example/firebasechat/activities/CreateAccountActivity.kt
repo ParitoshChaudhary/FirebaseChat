@@ -56,6 +56,7 @@ class CreateAccountActivity : AppCompatActivity() {
                 userObject["status"] = "Hello There..."
                 userObject["image"] = "Default"
                 userObject["thumb_image"] = "Default"
+                userObject["user_id"] = userId
 
                 mDatabase!!.setValue(userObject).addOnCompleteListener(this){
                         task: Task<Void> ->
