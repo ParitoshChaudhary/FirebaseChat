@@ -18,4 +18,6 @@
     <string name="txt_hint_status">Status...</string>
     <string name="txt_status_update">Update Status</string>
     <string name="txt_user_status">User Status</string>
+    <string name="txt_send_msg">Send Message</string>
+    <string name="txt_image_description">User Profile Image</string>
 </resources>

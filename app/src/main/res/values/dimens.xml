@@ -21,4 +21,6 @@
     <dimen name="dimen_text_21sp">21sp</dimen>
     <dimen name="dimen_200dp">200dp</dimen>
     <dimen name="dimen_370dp">370dp</dimen>
+    <dimen name="dimen_text_18sp">18sp</dimen>
+    <dimen name="dimen_text_24sp">24sp</dimen>
 </resources>

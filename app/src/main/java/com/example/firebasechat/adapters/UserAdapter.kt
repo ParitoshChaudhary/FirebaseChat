@@ -1,8 +1,12 @@
 package com.example.firebasechat.adapters
 
+import android.app.AlertDialog
 import android.app.SearchManager
 import android.content.Context
+import android.content.DialogInterface
+import android.content.Intent
 import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +15,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.firebasechat.R
+import com.example.firebasechat.activities.ChatActivity
+import com.example.firebasechat.activities.ProfileActivity
 import com.example.firebasechat.models.Users
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.squareup.picasso.Picasso
@@ -51,12 +57,31 @@ class UserAdapter(private val list: ArrayList<Users>, val context: Context):
             }
 
             itemView.setOnClickListener {
-                val userId = users.user_id
-                Toast.makeText(context, userId, Toast.LENGTH_SHORT).show()
+                val options = arrayOf("View Profile", "Send Message")
+                val builder = AlertDialog.Builder(context)
+                builder.setTitle("Select Options")
+                builder.setItems(options) { _, i ->
+                    val name = users.display_name
+                    val status = users.user_status
+                    val image = users.profile_image
+                    val userId = users.user_id
+
+                    if (i == 0) {
+                        val profileIntent = Intent(context, ProfileActivity::class.java)
+                        profileIntent.putExtra("user_id", userId)
+                        context.startActivity(profileIntent)
+                    } else {
+                        val chatIntent = Intent(context, ChatActivity::class.java)
+                        chatIntent.putExtra("user_id", userId)
+                        chatIntent.putExtra("name", name)
+                        chatIntent.putExtra("status", status)
+                        chatIntent.putExtra("image", image)
+                        context.startActivity(chatIntent)
+                    }
+                }
+                builder.show()
             }
-
         }
-
     }
 }
 
