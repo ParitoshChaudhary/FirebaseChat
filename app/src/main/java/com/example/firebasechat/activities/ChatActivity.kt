@@ -10,6 +10,7 @@ import com.example.firebasechat.models.Message
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
+import kotlinx.android.synthetic.main.activity_chat.*
 
 class ChatActivity : AppCompatActivity() {
 
@@ -29,8 +30,6 @@ class ChatActivity : AppCompatActivity() {
         rcv_messages = findViewById(R.id.rcv_message)
 
         userId = intent.extras!!.getString("user_id")
-        mLinearLayoutManager = LinearLayoutManager(this)
-        mLinearLayoutManager!!.stackFromEnd = true
 
         mFirebaseDatabaseRef = FirebaseDatabase.getInstance().reference.child("messages")
 
@@ -44,14 +43,29 @@ class ChatActivity : AppCompatActivity() {
                     msg.name = ds.child("name").getValue(String::class.java)
                     msgList?.add(msg)
                     msgAdapter = msgList?.let { MessageAdapter(it, this@ChatActivity) }
+                    mLinearLayoutManager = LinearLayoutManager(this@ChatActivity)
+                    mLinearLayoutManager!!.stackFromEnd = true
+                    rcv_messages!!.adapter = msgAdapter
+                    rcv_messages!!.layoutManager = mLinearLayoutManager
                 }
+                msgAdapter!!.notifyDataSetChanged()
             }
-
             override fun onCancelled(error: DatabaseError) {
 
             }
-
         })
+        btn_send.setOnClickListener {
+            if (intent.extras!!.get("name").toString() != ""){
+                val currentUserName = intent!!.extras!!.get("name")
+                val currentUserId = mFirebaseUser!!.uid
 
+                val message = Message(currentUserId, ed_message.text.toString().trim(),
+                    currentUserName.toString().trim())
+
+                mFirebaseDatabaseRef!!.child("messages")
+                    .push().setValue(message)
+                ed_message.setText("")
+            }
+        }
     }
 }
