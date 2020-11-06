@@ -2,10 +2,12 @@ package com.example.firebasechat.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.firebasechat.R
 import com.example.firebasechat.adapters.MessageAdapter
+import com.example.firebasechat.adapters.UserAdapter
 import com.example.firebasechat.models.Message
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -35,20 +37,24 @@ class ChatActivity : AppCompatActivity() {
 
         mFirebaseDatabaseRef!!.addValueEventListener(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
-                val children = snapshot.children
-                for (ds in children){
-                    val msg = Message()
-                    msg.text = ds.child("text").getValue(String::class.java)
-                    msg.id = ds.child("id").getValue(String::class.java)
-                    msg.name = ds.child("name").getValue(String::class.java)
-                    msgList?.add(msg)
-                    msgAdapter = msgList?.let { MessageAdapter(it, this@ChatActivity) }
-                    mLinearLayoutManager = LinearLayoutManager(this@ChatActivity)
-                    mLinearLayoutManager!!.stackFromEnd = true
-                    rcv_messages!!.adapter = msgAdapter
-                    rcv_messages!!.layoutManager = mLinearLayoutManager
+                if (snapshot.exists()){
+                    val children = snapshot.children
+                    for (ds in children){
+                        val msg = Message()
+                        msg.text = ds.child("text").getValue(String::class.java)
+                        msg.id = ds.child("id").getValue(String::class.java)
+                        msg.name = ds.child("name").getValue(String::class.java)
+                        msgList?.add(msg)
+                        msgAdapter = MessageAdapter(msgList!!, this@ChatActivity)
+                        mLinearLayoutManager = LinearLayoutManager(this@ChatActivity)
+                        mLinearLayoutManager!!.stackFromEnd = true
+                        rcv_messages!!.adapter = msgAdapter
+                        rcv_messages!!.layoutManager = mLinearLayoutManager
+                    }
+                    msgAdapter?.notifyDataSetChanged()
+                }else{
+                    Log.i("DATA MESSAGE", " ==============>>>> NO DATA AVAILABLE")
                 }
-                msgAdapter!!.notifyDataSetChanged()
             }
             override fun onCancelled(error: DatabaseError) {
 

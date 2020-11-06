@@ -55,7 +55,7 @@ class UsersFragment : Fragment() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+                Log.e("USER LIST ERROR", "===========>> $error")
             }
 
         })

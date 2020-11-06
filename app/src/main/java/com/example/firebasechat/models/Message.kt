@@ -6,10 +6,9 @@ class Message() {
     var text: String? = null
     var name: String? = null
 
-    constructor(id: String, text: String, name: String){
+    constructor(id: String, text: String, name: String): this(){
         this.id = id
         this.name = name
         this.text = text
     }
-
 }
